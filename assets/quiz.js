@@ -1,6 +1,7 @@
 var buttonEl = document.querySelector("#start-quiz");
 var answerContainer = document.querySelector(".choices-container");
 var currentQuestion = 0;
+var quizWrapper = document.querySelector(".quiz-wrapper");
 var timerEl = document.getElementById("countdown");
 var message = "Times Up!";
 var words = message.split(" ");
@@ -87,11 +88,8 @@ function displayMessage() {
 }
 
 function quizTaskHandler(event) {
-  var instruct = document.getElementById("instructions");
-  instruct.remove();
-  var startButton = document.getElementById("start-quiz");
-  startButton.remove();
-
+  // var startButton = document.getElementById("start-quiz");
+  // startButton.remove();
   countdown();
 
   var newQuestion = document.querySelector(".quiz-title");
@@ -101,11 +99,13 @@ function quizTaskHandler(event) {
     var createButtons = document.createElement("button");
     createButtons.className = "btn choice-button";
     createButtons.setAttribute("button-id", buttonIdEl);
+    createButtons.setAttribute(
+      "value",
+      questionBank[currentQuestion].answers[i]
+    );
     createButtons.textContent = questionBank[currentQuestion].answers[i];
     answerContainer.appendChild(createButtons);
     buttonIdEl++;
-  }
-  choiceButtonHander ();
   }
 }
 
@@ -148,13 +148,26 @@ function quizTaskHandler(event) {
 var choiceButtonHandler = function (event) {
   console.log(event.target);
   if (event.target.matches(".choice-button")) {
-    var choiceId = event.target.getAttribute("button-id");
-    if (choiceId.textContent === questionBank[currentQuestion].rightAnswer) {
+    var choiceId = event.target.value;
+    console.log(event.target.value, "value");
+    if (choiceId === questionBank[currentQuestion].rightAnswer) {
       scoreTracker = scoreTracker + 10;
+      console.log(scoreTracker);
       var correctAlert = document.createElement("p");
+      correctAlert.className = "alert";
       correctAlert.textContent = "CORRECT!";
-      instruct.appendChild(correctAlert);
-      console.log("correct");
+      quizWrapper.appendChild(correctAlert);
+      currentQuestion++;
+      quizTaskHandler();
+    } else {
+      scoreTracker = scoreTracker - 5;
+      console.log(scoreTracker);
+      var incorrectAlert = document.createElement("p");
+      incorrectAlert.className = "alert";
+      incorrectAlert.textContent = "Sorry, that is incorrect";
+      quizWrapper.appendChild(incorrectAlert);
+      currentQuestion++;
+      quizTaskHandler();
     }
   }
 };

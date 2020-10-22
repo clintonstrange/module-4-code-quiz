@@ -36,7 +36,7 @@ header h1 {
   margin: 10px;
 }
 
-.quiz-wrapper p {
+#instructions {
   text-align: center;
   margin: 10px 5px;
   display: flex;
@@ -59,4 +59,14 @@ header h1 {
   padding: 8px;
   width: 20%;
   margin: auto;
+}
+
+.alert {
+  display: block;
+  width: 100%;
+  text-align: center;
+  color: grey;
+  font-size: 30px;
+  font-style: italic;
+  font-weight: lighter;
 }
