@@ -1,12 +1,51 @@
+// when user clicks Start Quiz
+//  then 1st question replaces Quiz Header
+//  and multiple answers appear
+//  and timer appears in top right corner
+//  and timer begins counting down
+// when wrong answer is clicked
+// then wrong answer appears
+// and time is subtracted from timer
+// when right answer is clicked
+// then correct appears
+// and next question and answer choices appear
+// Game is over when time expires
+// or all questions have been completed
+// when game is over
+// then your high score is saved in _____ storage
+// and you can submit your initials to high score
+
+//  var object = {
+//     question: "Question Text?",
+//     answers: ["A1", "A2", "A3", "A4",]
+//     right answer: "",
+// }
+
+// var array = [1, 2, 3]
+//INDEXING!!!!!!!
+
+// array of objects
+
+// use event listener for event.target
+// use matches() to determine what answer is selected?
+
+// highScoreObj {
+// name: ,
+// score: ,
+//}
+
 var buttonEl = document.querySelector("#start-quiz");
 var answerContainer = document.querySelector(".choices-container");
+var alertContainer = document.querySelector("#alert-container");
 var currentQuestion = 0;
+var messageContainer = document.querySelector(".messages");
 var quizWrapper = document.querySelector(".quiz-wrapper");
 var timerEl = document.getElementById("countdown");
 var message = "Times Up!";
 var words = message.split(" ");
 var buttonIdEl = 0;
-var scoreTracker = 0;
+var timeLeft = 60;
+var alertEl = document.querySelector(".alert");
 var choicesContainerEl = document.querySelector("#choices-container");
 var questionBank = [
   {
@@ -61,7 +100,6 @@ var questionBank = [
 ];
 
 var countdown = function () {
-  var timeLeft = 30;
   var timeInterval = setInterval(function () {
     timerEl.textContent = timeLeft;
     if (timeLeft > 0) {
@@ -69,112 +107,93 @@ var countdown = function () {
     } else {
       clearInterval(timeInterval);
       timerEl.textContent = message;
+      gameOver();
     }
   }, 1000);
 };
 
-function displayMessage() {
-  var wordCount = 0;
+var stopTime = function () {
+  clearInterval(timeInterval);
+};
 
-  // Uses the `setInterval()` method to call a function to be executed every 300 milliseconds
-  var msgInterval = setInterval(function () {
-    if (words[wordCount] === undefined) {
-      clearInterval(msgInterval);
-    } else {
-      mainEl.textContent = words[wordCount];
-      wordCount++;
+function gameOver() {
+  answerContainer.innerHTML = "";
+  alertContainer.innerHTML = "";
+
+  var highScore = document.querySelector(".quiz-title");
+  highScore.textContent = "All Done! Your final score is " + timeLeft + "!";
+
+  var enterInitials = document.createElement("input");
+  enterInitials.className = "initial-input";
+  enterInitials.setAttribute("name", "initials");
+  enterInitials.setAttribute("placeholder", "Enter Initials");
+  alertContainer.appendChild(enterInitials);
+
+  var submitScore = document.createElement("button");
+  submitScore.className = "btn submit-score";
+  submitScore.setAttribute("type", "submit");
+  submitScore.textContent = "Submit Score";
+  alertContainer.appendChild(submitScore);
+}
+
+function quizTaskHandler() {
+  if (currentQuestion > 4) {
+    //stopTime();
+    gameOver();
+  } else {
+    answerContainer.innerHTML = "";
+
+    var newQuestion = document.querySelector(".quiz-title");
+    newQuestion.textContent = questionBank[currentQuestion].question;
+
+    for (var i = 0; i < questionBank[currentQuestion].answers.length; ++i) {
+      var createButtons = document.createElement("button");
+      createButtons.className = "btn choice-button";
+      createButtons.setAttribute("button-id", buttonIdEl);
+      createButtons.setAttribute(
+        "value",
+        questionBank[currentQuestion].answers[i]
+      );
+      createButtons.textContent = questionBank[currentQuestion].answers[i];
+      answerContainer.appendChild(createButtons);
+      buttonIdEl++;
     }
-  }, 300);
-}
-
-function quizTaskHandler(event) {
-  if (currentQuestion === 0) {
-    var startButton = document.getElementById("start-quiz");
-    startButton.remove();
-    var instructions = document.getElementById("instructions");
-    instructions.remove();
-  }
-  countdown();
-
-  var newQuestion = document.querySelector(".quiz-title");
-  newQuestion.textContent = questionBank[currentQuestion].question;
-
-  for (var i = 0; i < questionBank[currentQuestion].answers.length; ++i) {
-    var createButtons = document.createElement("button");
-    createButtons.className = "btn choice-button";
-    createButtons.setAttribute("button-id", buttonIdEl);
-    createButtons.setAttribute(
-      "value",
-      questionBank[currentQuestion].answers[i]
-    );
-    createButtons.textContent = questionBank[currentQuestion].answers[i];
-    answerContainer.appendChild(createButtons);
-    buttonIdEl++;
   }
 }
-
-// when user clicks Start Quiz
-//  then 1st question replaces Quiz Header
-//  and multiple answers appear
-//  and timer appears in top right corner
-//  and timer begins counting down
-// when wrong answer is clicked
-// then wrong answer appears
-// and time is subtracted from timer
-// when right answer is clicked
-// then correct appears
-// and next question and answer choices appear
-// Game is over when time expires
-// or all questions have been completed
-// when game is over
-// then your high score is saved in _____ storage
-// and you can submit your initials to high score
-
-//  var object = {
-//     question: "Question Text?",
-//     answers: ["A1", "A2", "A3", "A4",]
-//     right answer: "",
-// }
-
-// var array = [1, 2, 3]
-//INDEXING!!!!!!!
-
-// array of objects
-
-// use event listener for event.target
-// use matches() to determine what answer is selected?
-
-// highScoreObj {
-// name: ,
-// score: ,
-//}
 
 var choiceButtonHandler = function (event) {
   console.log(event.target);
+  alertContainer.innerHTML = "";
   if (event.target.matches(".choice-button")) {
     var choiceId = event.target.value;
     console.log(event.target.value, "value");
     if (choiceId === questionBank[currentQuestion].rightAnswer) {
-      scoreTracker = scoreTracker + 10;
-      console.log(scoreTracker);
       var correctAlert = document.createElement("p");
       correctAlert.className = "alert";
       correctAlert.textContent = "CORRECT!";
-      quizWrapper.appendChild(correctAlert);
+      alertContainer.appendChild(correctAlert);
       currentQuestion++;
       quizTaskHandler();
     } else {
-      scoreTracker = scoreTracker - 5;
-      console.log(scoreTracker);
+      //Time deduction
       var incorrectAlert = document.createElement("p");
       incorrectAlert.className = "alert";
       incorrectAlert.textContent = "Sorry, that is incorrect";
-      quizWrapper.appendChild(incorrectAlert);
+      alertContainer.appendChild(incorrectAlert);
       currentQuestion++;
       quizTaskHandler();
     }
   }
 };
 
-buttonEl.addEventListener("click", quizTaskHandler);
+function startQuizHandler(event) {
+  countdown();
+  var startButton = document.getElementById("start-quiz");
+  startButton.remove();
+  var instructions = document.getElementById("instructions");
+  instructions.remove();
+  quizTaskHandler();
+}
+
+buttonEl.addEventListener("click", startQuizHandler);
 choicesContainerEl.addEventListener("click", choiceButtonHandler);
