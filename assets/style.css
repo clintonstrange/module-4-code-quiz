@@ -1,46 +1,46 @@
 :root {
-    --primary: rgb(58, 6, 138);
+  --primary: rgb(58, 6, 138);
 }
 
 body {
-    font-family: Arial, Helvetica, sans-serif;
+  font-family: Arial, Helvetica, sans-serif;
 }
 
 header h1 {
-    color: fuchsia;
-    font-size: 12px;
-    font-weight: lighter;
-    margin: 20px;
+  color: fuchsia;
+  font-size: 12px;
+  font-weight: lighter;
+  margin: 20px;
 }
 
 .quiz-wrapper {
-    width: 500px;
-    margin: 30px auto;
-    display: flex;
-    flex-direction: column;
+  width: 500px;
+  margin: 30px auto;
+  display: flex;
+  flex-direction: column;
 }
 
 .quiz-title {
-    text-align: center;
-    font-size: 30px;
-    margin: 10px;
+  text-align: center;
+  font-size: 30px;
+  margin: 10px;
 }
 
 .quiz-wrapper p {
-    text-align: center;
-    margin: 10px 5px;
-    display: flex;
-    flex: wrap;
-    flex-direction: row;
+  text-align: center;
+  margin: 10px 5px;
+  display: flex;
+  flex: wrap;
+  flex-direction: row;
 }
 
 .btn {
-    color: rgb(255,255,255);
-    font-weight: lighter;
-    background-color: var(--primary);
-    border-radius: 4px;
-    border: none;
-    padding: 8px;
-    width: 20%;
-    margin: 10px auto;
+  color: rgb(255, 255, 255);
+  font-weight: lighter;
+  background-color: var(--primary);
+  border-radius: 4px;
+  border: none;
+  padding: 8px;
+  width: 20%;
+  margin: auto;
 }
