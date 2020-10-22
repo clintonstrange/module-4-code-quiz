@@ -5,7 +5,8 @@ var timerEl = document.getElementById("countdown");
 var message = "Times Up!";
 var words = message.split(" ");
 var buttonIdEl = 0;
-var ScoreTracker = 0;
+var scoreTracker = 0;
+var choicesContainerEl = document.querySelector("#choices-container");
 var questionBank = [
   {
     question: "What does DOM stand for?",
@@ -98,17 +99,18 @@ function quizTaskHandler(event) {
 
   for (var i = 0; i < questionBank[currentQuestion].answers.length; ++i) {
     var createButtons = document.createElement("button");
-    createButtons.className = "btn";
+    createButtons.className = "btn choice-button";
     createButtons.setAttribute("button-id", buttonIdEl);
     createButtons.textContent = questionBank[currentQuestion].answers[i];
     answerContainer.appendChild(createButtons);
     buttonIdEl++;
   }
-  if (buttonIdEl === questionBank[currentQuestion].rightAnswer) {
+  if (questionBank[currentQuestion].rightAnswer) {
     scoreTracker = scoreTracker + 10;
     var correctAlert = document.createElement("p");
     correctAlert.textContent = "CORRECT!";
     instruct.appendChild(correctAlert);
+    console.log(scoreTracker);
   }
 }
 
@@ -148,4 +150,15 @@ function quizTaskHandler(event) {
 // score: ,
 //}
 
+var choiceButtonHandler = function (event) {
+  console.log(event.target);
+  if (event.target.matches(".choice-button")) {
+    var choiceId = event.target.getAttribute("button-id");
+    if (choiceId.textContent === questionBank[currentQuestion].rightAnswer) {
+      console.log("correct");
+    }
+  }
+};
+
 buttonEl.addEventListener("click", quizTaskHandler);
+choicesContainerEl.addEventListener("click", choiceButtonHandler);
