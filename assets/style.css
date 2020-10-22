@@ -6,6 +6,11 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
+header {
+  display: flex;
+  justify-content: space-around;
+}
+
 header h1 {
   color: fuchsia;
   font-size: 12px;
@@ -13,8 +18,13 @@ header h1 {
   margin: 20px;
 }
 
+#countdown {
+  padding: 5px 10px;
+  font-size: 30px;
+}
+
 .quiz-wrapper {
-  width: 500px;
+  width: 700px;
   margin: 30px auto;
   display: flex;
   flex-direction: column;
@@ -32,6 +42,12 @@ header h1 {
   display: flex;
   flex: wrap;
   flex-direction: row;
+}
+
+.choices-container {
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
 }
 
 .btn {
