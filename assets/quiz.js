@@ -105,12 +105,7 @@ function quizTaskHandler(event) {
     answerContainer.appendChild(createButtons);
     buttonIdEl++;
   }
-  if (questionBank[currentQuestion].rightAnswer) {
-    scoreTracker = scoreTracker + 10;
-    var correctAlert = document.createElement("p");
-    correctAlert.textContent = "CORRECT!";
-    instruct.appendChild(correctAlert);
-    console.log(scoreTracker);
+  choiceButtonHander ();
   }
 }
 
@@ -155,6 +150,10 @@ var choiceButtonHandler = function (event) {
   if (event.target.matches(".choice-button")) {
     var choiceId = event.target.getAttribute("button-id");
     if (choiceId.textContent === questionBank[currentQuestion].rightAnswer) {
+      scoreTracker = scoreTracker + 10;
+      var correctAlert = document.createElement("p");
+      correctAlert.textContent = "CORRECT!";
+      instruct.appendChild(correctAlert);
       console.log("correct");
     }
   }
