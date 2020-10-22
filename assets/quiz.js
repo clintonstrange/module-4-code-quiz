@@ -88,8 +88,12 @@ function displayMessage() {
 }
 
 function quizTaskHandler(event) {
-  // var startButton = document.getElementById("start-quiz");
-  // startButton.remove();
+  if (currentQuestion === 0) {
+    var startButton = document.getElementById("start-quiz");
+    startButton.remove();
+    var instructions = document.getElementById("instructions");
+    instructions.remove();
+  }
   countdown();
 
   var newQuestion = document.querySelector(".quiz-title");
