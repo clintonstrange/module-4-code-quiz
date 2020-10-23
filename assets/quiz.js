@@ -47,6 +47,8 @@ var buttonIdEl = 0;
 var timeLeft = 60;
 var alertEl = document.querySelector(".alert");
 var choicesContainerEl = document.querySelector("#choices-container");
+var submitScoreContainerEl = document.querySelector("#submit-score-container");
+var scoreLeaderBoard = document.querySelector("#board");
 var questionBank = [
   {
     question: "What does DOM stand for?",
@@ -98,9 +100,15 @@ var questionBank = [
     rightAnswer: "#",
   },
 ];
-
+var highScoreObj = {
+  initials: [],
+  score: [],
+};
+//var leaderBoardEl = docoument.querySelector(".leader-board");
+var submitScoreEl = document.querySelector(".submit-score");
+var timeInterval;
 var countdown = function () {
-  var timeInterval = setInterval(function () {
+  timeInterval = setInterval(function () {
     timerEl.textContent = timeLeft;
     if (timeLeft > 0) {
       timeLeft--;
@@ -133,12 +141,44 @@ function gameOver() {
   submitScore.className = "btn submit-score";
   submitScore.setAttribute("type", "submit");
   submitScore.textContent = "Submit Score";
-  alertContainer.appendChild(submitScore);
+  submitScore.setAttribute(
+    "onclick",
+    "window.location.href = 'leaderboard.html';"
+  );
+  submitScoreContainerEl.appendChild(submitScore);
 }
 
-function quizTaskHandler() {
+var highScoreHandler = function (event) {
+  var initialInput = document.querySelector("input[name='initials']").value;
+
+  if (!initialInput) {
+    alert("You need to add your initials!");
+    return false;
+  } else {
+    highScoreObj = {
+      initials: initialInput,
+      score: timeLeft,
+    };
+  }
+  var leaderBoardEl = document.createElement("li");
+  leaderBoardEl.className = "user-score";
+  scoreLeaderBoard.appendChild(leaderBoardEl);
+
+  var scoreInfoEl = document.createElement("div");
+  scoreInfoEl.className = "user-score-info";
+  scoreInfoEl.innerHTML =
+    "<h2 class='user-initial-info'>" +
+    highScoreObj.initials +
+    "</h3><span class='user-score-info'>" +
+    highScoreObj.score +
+    "</span>";
+
+  leaderBoardEl.appendChild(scoreInfoEl);
+};
+
+function quizHandler() {
   if (currentQuestion > 4) {
-    //stopTime();
+    stopTime();
     gameOver();
   } else {
     answerContainer.innerHTML = "";
@@ -173,15 +213,15 @@ var choiceButtonHandler = function (event) {
       correctAlert.textContent = "CORRECT!";
       alertContainer.appendChild(correctAlert);
       currentQuestion++;
-      quizTaskHandler();
+      quizHandler();
     } else {
-      //Time deduction
+      timeLeft = timeLeft - 5;
       var incorrectAlert = document.createElement("p");
       incorrectAlert.className = "alert";
       incorrectAlert.textContent = "Sorry, that is incorrect";
       alertContainer.appendChild(incorrectAlert);
       currentQuestion++;
-      quizTaskHandler();
+      quizHandler();
     }
   }
 };
@@ -192,8 +232,9 @@ function startQuizHandler(event) {
   startButton.remove();
   var instructions = document.getElementById("instructions");
   instructions.remove();
-  quizTaskHandler();
+  quizHandler();
 }
 
 buttonEl.addEventListener("click", startQuizHandler);
 choicesContainerEl.addEventListener("click", choiceButtonHandler);
+submitScoreContainerEl.addEventListener("click", highScoreHandler);
