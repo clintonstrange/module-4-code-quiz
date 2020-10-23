@@ -104,7 +104,7 @@ var highScoreObj = {
   initials: [],
   score: [],
 };
-//var leaderBoardEl = docoument.querySelector(".leader-board");
+
 var submitScoreEl = document.querySelector(".submit-score");
 var timeInterval;
 var countdown = function () {
@@ -235,6 +235,8 @@ function startQuizHandler(event) {
   quizHandler();
 }
 
-buttonEl.addEventListener("click", startQuizHandler);
-choicesContainerEl.addEventListener("click", choiceButtonHandler);
-submitScoreContainerEl.addEventListener("click", highScoreHandler);
+if (buttonEl !== null) {
+  buttonEl.addEventListener("click", startQuizHandler);
+  choicesContainerEl.addEventListener("click", choiceButtonHandler);
+  submitScoreContainerEl.addEventListener("click", highScoreHandler);
+}
