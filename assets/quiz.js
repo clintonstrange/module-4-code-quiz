@@ -1,39 +1,3 @@
-// when user clicks Start Quiz
-//  then 1st question replaces Quiz Header
-//  and multiple answers appear
-//  and timer appears in top right corner
-//  and timer begins counting down
-// when wrong answer is clicked
-// then wrong answer appears
-// and time is subtracted from timer
-// when right answer is clicked
-// then correct appears
-// and next question and answer choices appear
-// Game is over when time expires
-// or all questions have been completed
-// when game is over
-// then your high score is saved in _____ storage
-// and you can submit your initials to high score
-
-//  var object = {
-//     question: "Question Text?",
-//     answers: ["A1", "A2", "A3", "A4",]
-//     right answer: "",
-// }
-
-// var array = [1, 2, 3]
-//INDEXING!!!!!!!
-
-// array of objects
-
-// use event listener for event.target
-// use matches() to determine what answer is selected?
-
-// highScoreObj {
-// name: ,
-// score: ,
-//}
-
 var buttonEl = document.querySelector("#start-quiz");
 var answerContainer = document.querySelector(".choices-container");
 var alertContainer = document.querySelector("#alert-container");
@@ -48,7 +12,6 @@ var timeLeft = 60;
 var alertEl = document.querySelector(".alert");
 var choicesContainerEl = document.querySelector("#choices-container");
 var submitScoreContainerEl = document.querySelector("#submit-score-container");
-var scoreLeaderBoard = document.querySelector("#board");
 var questionBank = [
   {
     question: "What does DOM stand for?",
@@ -104,9 +67,9 @@ var highScoreObj = {
   initials: [],
   score: [],
 };
-
 var submitScoreEl = document.querySelector(".submit-score");
 var timeInterval;
+
 var countdown = function () {
   timeInterval = setInterval(function () {
     timerEl.textContent = timeLeft;
@@ -155,25 +118,9 @@ var highScoreHandler = function (event) {
     alert("You need to add your initials!");
     return false;
   } else {
-    highScoreObj = {
-      initials: initialInput,
-      score: timeLeft,
-    };
+    localStorage.setItem("user", initialInput);
+    localStorage.setItem("score", timeLeft);
   }
-  var leaderBoardEl = document.createElement("li");
-  leaderBoardEl.className = "user-score";
-  scoreLeaderBoard.appendChild(leaderBoardEl);
-
-  var scoreInfoEl = document.createElement("div");
-  scoreInfoEl.className = "user-score-info";
-  scoreInfoEl.innerHTML =
-    "<h2 class='user-initial-info'>" +
-    highScoreObj.initials +
-    "</h3><span class='user-score-info'>" +
-    highScoreObj.score +
-    "</span>";
-
-  leaderBoardEl.appendChild(scoreInfoEl);
 };
 
 function quizHandler() {
