@@ -65,6 +65,10 @@ header h1 a {
   margin: auto;
 }
 
+.btn:hover {
+  background-color: rgb(14, 151, 14);
+}
+
 .alert {
   display: block;
   width: 100%;

@@ -4,8 +4,9 @@ var clearScoresButtonEl = document.querySelector("#clear-scores");
 var leaderboard = function () {
   var getInitials = localStorage.getItem("user");
   var getScore = localStorage.getItem("score");
-
-  userInfoSpan.textContent = getInitials + " - " + getScore;
+  var postScore = document.createElement("li");
+  postScore.textContent = getInitials + " - " + getScore;
+  userInfoSpan.appendChild(postScore);
 };
 
 leaderboard();

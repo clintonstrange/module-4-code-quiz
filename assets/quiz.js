@@ -92,7 +92,9 @@ function gameOver() {
   alertContainer.innerHTML = "";
 
   var highScore = document.querySelector(".quiz-title");
-  highScore.textContent = "All Done! Your final score is " + timeLeft + "!";
+  var adjustedTimeLeft = timeLeft + 1;
+  highScore.textContent =
+    "All Done! Your final score is " + adjustedTimeLeft + "!";
 
   var enterInitials = document.createElement("input");
   enterInitials.className = "initial-input";
@@ -119,7 +121,7 @@ var highScoreHandler = function (event) {
     return false;
   } else {
     localStorage.setItem("user", initialInput);
-    localStorage.setItem("score", timeLeft);
+    localStorage.setItem("score", timeLeft + 1);
   }
 };
 
