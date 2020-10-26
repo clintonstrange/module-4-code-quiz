@@ -9,6 +9,7 @@ var message = "Times Up!";
 var words = message.split(" ");
 var buttonIdEl = 0;
 var timeLeft = 60;
+var highScoresEl = [];
 var alertEl = document.querySelector(".alert");
 var choicesContainerEl = document.querySelector("#choices-container");
 var submitScoreContainerEl = document.querySelector("#submit-score-container");
@@ -114,14 +115,33 @@ function gameOver() {
 }
 
 var highScoreHandler = function (event) {
+  debugger;
   var initialInput = document.querySelector("input[name='initials']").value;
 
   if (!initialInput) {
     alert("You need to add your initials!");
     return false;
   } else {
-    localStorage.setItem("user", initialInput);
-    localStorage.setItem("score", timeLeft + 1);
+    highScoreObject = {
+      user: initialInput,
+      score: timeLeft + 1,
+    };
+    // get array from local storage
+    //   var scoreInfo = local.storage.getItem("highScores");
+    //   if (scoreInfo != null) {
+    //     var findHighScore = highScores.findIndex(
+    //       (a) => a.score > highScoreObject.score
+    //     );
+
+    //     highScores.splice(findHighScore, 0, highScoreObject);
+    //     localStorage.setItem("highScores", highScores);
+    //   } else {
+    //     localStorage.setItem("highScores", [highScoreObject]);
+    //   }
+    // }
+    highScoresEl.push(highScoreObject);
+
+    localStorage.setItem("highscores", JSON.stringify([highScoreObject]));
   }
 };
 
