@@ -127,7 +127,7 @@ var highScoreHandler = function (event) {
       score: timeLeft + 1,
     };
     highScoresEl.push(highScoreObject);
-    localStorage.setItem("highscores", JSON.stringify([highScoresEl]));
+    localStorage.setItem("highscores", JSON.stringify(highScoresEl));
   }
 };
 

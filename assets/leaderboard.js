@@ -3,6 +3,7 @@ var clearScoresList = document.getElementById("#user-info");
 
 var printHighScores = function () {
   var userHighScores = JSON.parse(localStorage.getItem("highscores")) || [];
+  console.log(userHighScores);
 
   userHighScores.sort(function (a, b) {
     return b.score - a.score;
@@ -11,7 +12,7 @@ var printHighScores = function () {
   userHighScores.forEach(function (score) {
     var liTag = document.createElement("li");
     liTag.textContent = score.user + " - " + score.score;
-    var olEl = document.getElementById("#user-info");
+    var olEl = document.getElementById("user-info");
     olEl.appendChild(liTag);
   });
 };
