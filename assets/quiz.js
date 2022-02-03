@@ -115,7 +115,7 @@ function gameOver() {
 }
 
 var highScoreHandler = function (event) {
-  debugger;
+  // debugger;
   var initialInput = document.querySelector("input[name='initials']").value;
 
   if (!initialInput) {
@@ -157,11 +157,11 @@ function quizHandler() {
 }
 
 var choiceButtonHandler = function (event) {
-  console.log(event.target);
+  // console.log(event.target);
   alertContainer.innerHTML = "";
   if (event.target.matches(".choice-button")) {
     var choiceId = event.target.value;
-    console.log(event.target.value, "value");
+    // console.log(event.target.value);
     if (choiceId === questionBank[currentQuestion].rightAnswer) {
       var correctAlert = document.createElement("p");
       correctAlert.className = "alert";

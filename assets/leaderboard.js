@@ -3,7 +3,7 @@ var clearScoresList = document.getElementById("#user-info");
 
 var printHighScores = function () {
   var userHighScores = JSON.parse(localStorage.getItem("highscores")) || [];
-  console.log(userHighScores);
+  // console.log(userHighScores);
 
   userHighScores.sort(function (a, b) {
     return b.score - a.score;
